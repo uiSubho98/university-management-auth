@@ -9,7 +9,7 @@
     "lint:fix": "eslint --fix",
     "prettier": "prettier --write \"src/**/*.{js,ts}\"",
     "prettier:check": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
-    "lint-prettier": "npm run lint:check && npm run  prettier:check",
+    "lint-prettier": "npm run lint:check && npm run prettier:check",
     "lint-staged": "lint-staged",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,12 +19,18 @@
   ],
   "author": "subhojit",
   "license": "ISC",
-  "lint-staged":{
+  "lint-staged": {
     "src/**/*.ts": "npm run lint-prettier"
   },
   "husky": {
     "hooks": {
       "pre-commit": "npx lint-staged"
+    }
+  },
+  "eslintConfig": {
+    "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+    "rules": {
+      "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }]
     }
   },
   "devDependencies": {
