@@ -2,14 +2,14 @@
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 13,
-    "sourceType": "module"
+    "sourceType": "module",
   },
   "plugins": ["@typescript-eslint"],
   // HERE
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier"
+    "prettier",
   ],
 
   "rules": {
@@ -17,12 +17,16 @@
     "no-console": "error",
     "no-undef": "error",
     "no-unused-expressions": "error",
-    "no-unreachable":"error",
-    "consistent-type-definitions": ["error", "type"]
+    "no-unreachable": "error",
+    "consistent-type-definitions": "off"
   },
 
   "env": {
+    "node": true,
     "browser": true,
     "es2021": true
+  },
+  "globals": {
+    "process": "readonly"
   }
 }

@@ -1,20 +1,34 @@
-import { Request, Response } from 'express'
-import usersService from './users.service'
-const createUser = async (req: Request, res: Response) => {
+import { RequestHandler } from 'express'
+import { z } from 'zod'
+import { UserService } from './users.service'
+const createUser: RequestHandler = async (req, res, next) => {
   try {
+    // req validation dorkar via zod
+    //body -> object
+    //data -> object
+
+    const createUserZodSchema = z.object({
+      body: z.object({
+        role: z.string({
+          required_error: 'role is required',
+        }),
+        password: z.string().optional(),
+      }),
+    })
+    await createUserZodSchema.parseAsync(req)
+
     const { user } = req.body
-    const result = await usersService.createUser(user)
+    const result = await UserService.createUser(user)
     res.status(200).json({
       success: true,
       message: 'User created successfuly',
       data: result,
     })
   } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: 'Failed to create user',
-    })
+    next(error)
   }
 }
 
-export default { createUser }
+export const UserController = {
+  createUser,
+}
